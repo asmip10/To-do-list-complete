@@ -51,14 +51,13 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    white-space: nowrap; /* Evita que el texto del botón se rompa a otra línea */
+    white-space: nowrap;
   }
   
   button:hover {
     background-color: #3e8e41;
   }
   
-  /* Media query para pantallas pequeñas */
   @media (max-width: 768px) {
     .container {
       width: 90%;
