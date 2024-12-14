@@ -3,13 +3,13 @@ const addTaskBtn = document.getElementById('addTaskBtn');
 const taskList = document.getElementById('taskList');
 const clearCompletedBtn = document.getElementById('clearCompletedBtn');
 
-let tasks = []; // Ahora las tareas se guardan en un array en memoria
+let tasks = [];
 
-displayTasks(tasks); // Mostrar la lista vacía al inicio
+addTaskBtn.addEventListener('click',addTask);
 
-function addTask() {
+function addTask(){
     const taskText = taskInput.value.trim();
-    if (taskText === '') return;
+    if(taskText === '') return;
 
     const newTask = {
         text: taskText,
@@ -18,13 +18,13 @@ function addTask() {
 
     tasks.push(newTask);
     displayTasks(tasks);
-    taskInput.value = '';
+    taskInput.value='';
 }
 
 function displayTasks(tasks) {
     taskList.innerHTML = '';
 
-    tasks.forEach((task, index) => {
+    tasks.forEach((task,index) => {
         const li = document.createElement('li');
 
         const checkbox = document.createElement('input');
@@ -40,41 +40,40 @@ function displayTasks(tasks) {
         const taskTextSpan = document.createElement('span');
         taskTextSpan.className = 'task-text';
         taskTextSpan.textContent = task.text;
-        if (task.completed) {
-            taskTextSpan.classList.add('completed');
-        }
+        if(task.completed) taskTextSpan.classList.add('completed');
 
         const editBtn = document.createElement('button');
-        editBtn.textContent = 'Editar';
+        editBtn.textContent = 'Edit';
 
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'X';
 
-        checkbox.addEventListener('change', () => {
+        checkbox.addEventListener('change',() => {
             task.completed = checkbox.checked;
-            displayTasks(tasks); // No es necesario guardar en localStorage
+            displayTasks(tasks);
         });
 
-        editBtn.addEventListener('click', () => {
+        editBtn.addEventListener('click',() => {
             editInput.style.display = 'inline';
             taskTextSpan.style.display = 'none';
             editInput.focus();
         });
 
-        editInput.addEventListener('blur', () => {
-            task.text = editInput.value;
-            displayTasks(tasks); // No es necesario guardar en localStorage
-        });
-        editInput.addEventListener("keyup", (event) => {
-          if (event.key === "Enter") {
+        editInput.addEventListener('blur',()=>{
             task.text = editInput.value;
             displayTasks(tasks);
-          }
-        })
+        });
 
-        deleteBtn.addEventListener('click', () => {
-            tasks.splice(index, 1);
-            displayTasks(tasks); // No es necesario guardar en localStorage
+        editInput.addEventListener("keyup", (event) => {
+            if(event.key === 'Enter') {
+                task.text = editInput.value;
+                displayTasks(tasks);
+            }
+        });
+
+        deleteBtn.addEventListener('click',() => {
+            tasks.splice(index,1);
+            displayTasks(tasks);
         });
 
         li.appendChild(checkbox);
@@ -86,15 +85,15 @@ function displayTasks(tasks) {
     });
 }
 
-addTaskBtn.addEventListener('click', addTask);
 
-taskInput.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-      addTask();
+
+taskInput.addEventListener("keyup",(event) => {
+    if(event.key === 'Enter') {
+        addTask();
     }
-  });
+});
 
-clearCompletedBtn.addEventListener('click', () => {
+clearCompletedBtn.addEventListener('click',() => {
     tasks = tasks.filter(task => !task.completed);
     displayTasks(tasks);
 });
